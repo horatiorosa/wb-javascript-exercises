@@ -20,9 +20,12 @@
 
     names.push('lux');
     console.log(names);
+    // immutable method and add w/o using .push -common in react
     const names2 = [...names, 'lux'];
+    // add to the front of an array
     names.unshift('poppy');
     console.log(names);
+     // immutable method and add w/o using .unshift
     const names3 = ['poppy', ...names];
     console.log(names3);
 
@@ -57,7 +60,27 @@
         ...comments.slice(commentIndex + 1),
       ];
       // return our new array
-    }
+    } // if you wanted to overwrite the original array, use let rather than const
+    // deleteComment(233, comments) returns (4) [{…}, {…}, {…}, {…}]
+
+    /*
+      more verbose way of finding the kaitIndex
+        const kaitIndex = names.findIndex(name => {
+          if (names === 'kait') {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        since names === 'kait' returns a boolean we can shorten to the function with an explicit return
+
+        const kaitIndex = names.findIndex(name => {
+          return names === 'kait';
+        }
+
+        and futher refactoring below for the implicit return of the value
+    */
 
     const kaitIndex = names.findIndex(name => name === 'kait');
     const newNamesWithOutKait = [
@@ -66,6 +89,15 @@
       // everything after Kait index
       ...names.slice(kaitIndex + 1)
     ];
+    /*
+      you can also do the following, the slice method will return 2 separate arrays and the .flat and return  new array with all sub-array elements concatenated into it
+
+      const newNamesWithOutKait = [
+        names.slice(0, kaitIndex),
+        names.slice(kaitIndex + 1)
+      ].flat();
+
+    */
     console.log(newNamesWithOutKait);
 
     // const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];

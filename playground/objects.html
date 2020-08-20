@@ -31,13 +31,20 @@
       }
     };
 
+    /*
+    function shorthand for the above method
+    sayHello(greeting = 'Hey') {
+      return `${greeting} ${this.name}`;
+    }
+    */
+
     wes.job = 'Web Developer';
     wes.age = 50;
 
-    console.log(wes.age);
+    console.log('age', wes.age);
+    const properyToCheck = prompt('What do you want to check?');
     // const properyToCheck = prompt('What do you want to check?');
-    // console.log(properyToCheck);
-    // console.log(wes[properyToCheck]);
+    console.log('checked property: ', wes[properyToCheck]);
 
     const nameInput = document.querySelector('[name="first"]');
     const name = nameInput ? nameInput.value : '';
@@ -74,8 +81,8 @@
 
     // const person3 = person1;
     // person3.first = 'Larry';
-    // console.log(person3.first);
-    // console.log(person1.first);
+    // console.log('person3', person3.first);
+    // console.log('person1', person1.first);
     // const person3 = { ...person1 };
     const person3 = _.cloneDeep(person1);
     person3.first = 'Larry';

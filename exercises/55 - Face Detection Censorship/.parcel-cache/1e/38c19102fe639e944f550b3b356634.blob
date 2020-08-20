@@ -1,0 +1,2 @@
+// const faceDetector = new FaceDetector({ fastMode: true });
+console.log('that works');

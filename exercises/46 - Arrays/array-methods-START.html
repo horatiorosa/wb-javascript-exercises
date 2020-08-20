@@ -11,6 +11,7 @@
 </head>
 
 <body>
+  <script src="https://unpkg.com/lodash"></script>
   <script>
     const toppings = ['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese'];
 
@@ -45,50 +46,554 @@
     */
 
     // Array.of();
+    const dog = "canine";
+    const coffee = {
+      "key1": "coffee",
+      "key2": "coffee pot",
+    }
+    const itemsArray = ['item1', 'item2']
+    const arrayDotOf = Array.of(7, dog, "jiro", itemsArray, coffee, {"u": "one", "duez": "two"});
+    // console.log(arrayDotOf);
 
-    // Make a function that creates a range from x to y with Array.from();
+    // Make a function that creates a range from x to y with Array.from() a static method creates a new, shallow-copied Array instance from an array-like or iterable object. SYNTAX: Array.from(arrayLike [, mapFn [, thisArg]])
+    /*
+      FROM THE DOCS
+      const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
+
+      range(0, 4, 1);
+      # [0, 1, 2, 3, 4]
+
+      example - creates an array with 10 slots along wuth a map function
+      const range = Array.from({length: 10}, function() {return 'xyx'; })
+        # range
+          (10) ["xyx", "xyx", "xyx", "xyx", "xyx", "xyx", "xyx", "xyx", "xyx", "xyx"]
+
+      function can take arguments function(item, index) { return index; }
+    */
+    function createRange(start, end) {
+      const range = Array.from({length: end - start + 1}, // inclusive of end
+        function(item, index) {
+          return index + start;
+      });
+      return range;
+    }
+
+    myRange = createRange(3, 7);
+    // console.log(myRange);
+    /*
+      (5) [3, 4, 5, 6, 7]
+        0: 3
+        1: 4
+        2: 5
+        3: 6
+        4: 7
+        length: 5
+        __proto__: Array(0)
+    */
+
 
     // Check if the last array you created is really an array with Array.isArray();
+    const isThisAnArray = Array.isArray(myRange);
+    // console.log("Is myRange an array? ", isThisAnArray ? "yes" : "no");
+    /* # Is myRange an array?  yes */
 
     // Take the meats object and make three arrays with Object.entries(), Object.keys, Object.values()
+    /*
+      Object.entries() method returns an array of a given object's own enumerable string-keyed property [key, value] pairs, in the same order as that provided by a for...in loop.
+      (The only important difference is that a for...in loop enumerates (mentions a number of things one by one) properties in the prototype chain as well).     */
+    const objectEntries = Object.entries(meats);
+    // console.log('objectEntries: ', objectEntries);
+    /*
+      #
+      objectEntries: (3) [Array(2), Array(2), Array(2)]
+        0: (2) ["beyond", 10]
+        1: (2) ["beef", 5]
+        2: (2) ["pork", 7]
+        length: 3
+        __proto__: Array(0)
+    */
+
+    /*
+      Object.keys() method returns an array of a given object's own enumerable property names (keys), iterated in the same order that a normal loop would.
+    */
+    const objectKeys = Object.keys(meats);
+    // console.log('objectKeys: ', objectKeys);
+    /*
+      #
+      objectKeys:  (3) ["beyond", "beef", "pork"]
+        0: "beyond"
+        1: "beef"
+        2: "pork"
+        length: 3
+        __proto__: Array(0)
+    */
+
+    /*
+      Object.values() method returns an array of a given object's own enumerable property values, in the same order as that provided by a for...in loop. (The only difference is that a for...in loop enumerates properties in the prototype chain as well.)
+    */
+
+    const objectValues = Object.values(meats);
+    // console.log("objectValues: ", objectValues);
+    /*
+      #
+      objectValues:  (3) [10, 5, 7]
+        0: 10
+        1: 5
+        2: 7
+        length: 3
+        __proto__: Array(0)
+    */
+
+    /*
+      Using forEach on  Object.entries(), Object.keys, Object.values()
+    */
+    // objectValues.forEach(qty => { console.log("quantity:", qty); });
+    // objectKeys.forEach(meat => { console.log("type of meat:", meat); });
+    // objectEntries.forEach(entry => { console.log("type of entry:", entry); });
+
+    // objectEntries.forEach(entry => {
+    //   const key = entry[0];
+    //   const value = entry[1];
+    //   destructured const below
+    //   const [key, value] = entry;
+    //   console.log("key:", key, "-", "value:", value);
+    // });
+
+    //  EVEN MORE DESTRUCTURING / REFACTORING:
+      objectEntries.forEach(([key, value]) => {
+      // console.log("key:", key, "-", "value:", value);
+    });
+
+    /*
+      both methods return:
+      2 key: beyond - value: 10
+      2 key: beef - value: 5
+      2 key: pork - value: 7
+     */
 
     /*
       Instance Methods
     */
 
-    // Display all bun types with " or " - use join()
+    // Display all bun types with " or " - use join() (creates and returns a new string by concatenating all of the elements in an array (or an array-like object), separated by commas or a specified separator string. If the array has only one item, then that item will be returned without using the separator)
+    const joinDemBums = buns.join(" or ");
+    // console.log('joinDemBums: ', joinDemBums);
 
-    // We have a string "hot dogs,hamburgers,sausages,corn" - use split() to turn it into a string
+    /* # "egg or wonder or brioche" */
 
-    // take the last item off toppings with pop()
-    // add it back with push()
-    // take the first item off toppings with shift()
-    // add it back in with unshift()
+    // We have a string "hot dogs,hamburgers,sausages,corn" - use split() to turn it into a array (method divides a String into an ordered list of substrings, puts these substrings into an array, and returns the array.  The division is done by searching for a pattern; where the pattern is provided as the first parameter in the method's call.)
+    let str = 'hot dogs,hamburgers,sausages,corn';
+    const newStr = str.split(',');
+    // console.log('newStr: ',newStr);
+    /*
+      # newStr: (4) ["hot dogs", "hamburgers", "sausages", "corn"]
+    */
+
+    // take the last item off toppings with pop() (method removes the last element from an array and returns that element. This method changes the length of the array.)
+    const lastItem = toppings.pop()
+    // console.log('last item: ', lastItem)
+    // console.log('remove topping: ', toppings);
+    /*
+      # last item: "Cheese"
+      # remove topping: ["Mushrooms ", "Tomatoes", "Eggs", "Chili", "Lettuce", "Avocado", "Chiles", "Bacon", "Pickles", "Onions"]
+    */
+
+    // add it back with push()(method adds zero or more elements to the end of an array and returns the new length of the array.)
+    toppings.push("Cheese");
+    // console.log('add back topping: ', toppings);
+    /*
+      # add back topping: (11) ["Mushrooms ", "Tomatoes", "Eggs", "Chili", "Lettuce", "Avocado", "Chiles", "Bacon", "Pickles", "Onions", "Cheese"]
+    */
+
+    // take the first item off toppings with shift() ( method removes the first element from an array and returns that removed element. This method changes the length of the array.)
+    const firstItem = toppings.shift();
+    // console.log('1st topping: ', firstItem);
+    // console.log('remove 1st topping: ', toppings);
+    /*
+      # 1st topping: "Mushrooms"
+      remove 1st topping:  (10) ["Tomatoes", "Eggs", "Chili", "Lettuce", "Avocado", "Chiles", "Bacon", "Pickles", "Onions", "Cheese"]
+    */
+
+    // add it back in with unshift() (method adds one or more elements to the beginning of an array and returns the new length of the array.)
+    toppings.unshift(firstItem);
+    // console.log('added back 1st topping: ', toppings);
+    /*
+      # added back 1st topping:  (11) ["Mushrooms", "Tomatoes", "Eggs", "Chili", "Lettuce", "Avocado", "Chiles", "Bacon", "Pickles", "Onions", "Cheese"]
+    */
+
     // Do the last four,but immutable (with spreads and new variables)
+    const oneLessTopping = [
+    ...toppings
+    ];
+    oneLessTopping.pop();
+    // console.log("toppings: ", toppings);
+    // console.log("oneLessTopping ", oneLessTopping);
+    /*
+      OR
+      let newToppings = toppings.slice(0, toppings.length -1);
+    */
 
+    oneMoreTopping = [...oneLessTopping, "Cheese"];
+    // console.log("toppings: ", toppings);
+    // console.log("oneLessTopping ", oneLessTopping);
+    // console.log("oneMoreTopping ", oneMoreTopping);
+    /*
+      OR (based on WB's previous answer, reference toppings from original array bc origal array is unchanged)
+      newToppings = [...newToppings, toppings[toppings.length -1]];
+    */
 
-    // Make a copy of the toppings array with slice()
+    const removeFirstTopping = [
+      ...toppings.slice(1)
+    ];
+    // console.log("toppings: ", toppings);
+    // console.log("removeFirstTopping ", removeFirstTopping);
+
+    const insertFirstTopping = ["Mushrooms", ...removeFirstTopping];
+    /*
+      OR
+      let sliceToppings = toppings.slice(1, toppings.length -1)
+      sliceToppings = [toppings[toppings.length - toppings.length], ...sliceToppings];
+    */
+    // console.log("toppings: ", toppings);
+    // console.log("removeFirstTopping ", removeFirstTopping);
+    // console.log("insertFirstTopping ", insertFirstTopping);
+
+    // Make a copy of the toppings array with slice() (method returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified.)
+    const copyToppingsUsingSlice = toppings.slice(0);
+    // console.log("toppings: ", toppings);
+    // console.log("copyToppingsUsingSlice: ", copyToppingsUsingSlice);
+
     // Make a copy of the toppings array with a spread
-    // take out items 3 to 5 of your new toppings array with splice()
-    // find the index of Avocado with indexOf() / lastIndexOf()
-    // Check if hot sauce is in the toppings with includes()
-    // add it if it's not
-    // flip those toppings around with reverse()
+    const copyToppingsUsingSpread = [...toppings];
+    // console.log("toppings: ", toppings);
+    // console.log("copyToppingsUsingSpread: ", copyToppingsUsingSpread);
 
+    // take out items 3 to 5 of your new toppings array with splice() (method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
+    // Syntax: array.splice(start[, deleteCount[, item1[, item2[, ...]]]]))
+    copyToppingsUsingSpread.splice(3, 5)
+    // console.log("copyToppingsUsingSpread: ", copyToppingsUsingSpread);
+
+    // find the index of Avocado with indexOf() (method returns the first index at which a given element can be found in the array, or -1 if it is not present) / lastIndexOf() (method returns the last index at which a given element can be found in the array, or -1 if it is not present. The array is searched backwards, starting at fromIndex)
+    const indexOfToppings = toppings.indexOf("Avocado");
+    // console.log("index:", indexOfToppings, ",", "topping:", toppings[indexOfToppings]);
+    const lastIndexOfToppings = toppings.lastIndexOf("Avocado");
+    // console.log("index:", lastIndexOfToppings, ",", "topping:", toppings[lastIndexOfToppings]);
+    /*
+      base on the toppings array before it's mutation later in this file
+      toppings = ['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese'];
+
+      both methods return --- index: 5 , topping: Avocado
+    */
+
+    const wes = { name: 'wes' };
+    const people = [{name: 'scott'}, wes];
+    /*
+      people
+        (2) [{…}, {…}]0:
+          {name: "scott"}1:
+          {name: "wes"}length:
+          2__proto__: Array(0)
+    */
+    // console.log(people.indexOf(wes));
+    /* 1 */
+    // console.log(people.indexOf({ name:'scott' }))
+    /* -1 (indicates it didn't find anything bc the references ({ name:'scott' } and people[0]) are not the same*/
+
+    // Check if hot sauce is in the toppings with includes() (method determines whether an array includes a certain value among its entries, returning true or false as appropriate)
+    const isThereHotSauce = toppings.includes('Hot Sauce'); // returns false;
+
+    // add it if it's not
+    function addSomeHotSauce() {
+     if (!isThereHotSauce) {
+      // console.log("Is there hot sauce on the menu? ", isThereHotSauce ? "Yes" : "No");
+      toppings.push('Hot Sauce');;
+      }
+     // console.log("toppings: ", toppings);
+    }
+    addSomeHotSauce();
+    /*
+      Is there hot sauce on the menu?  No
+      toppings:  (12) ["Mushrooms", "Tomatoes", "Eggs", "Chili", "Lettuce", "Avocado", "Chiles", "Bacon", "Pickles", "Onions", "Cheese", "Hot Sauce"]
+    */
+
+    // flip those toppings around with reverse() (method reverses an array in place)
+    const toppingsReversed = [...toppings].reverse();
+    // OR  toppings.reverse() but this mutates original array
+    // console.log("original toppings: ", toppings);
+    // console.log("reversed toppings: ", toppingsReversed);
+
+    /*
+      #
+      original toppings:  (12) ["Mushrooms ", "Tomatoes", "Eggs", "Chili", "Lettuce", "Avocado", "Chiles", "Bacon", "Pickles", "Onions", "Cheese", "Hot Sauce"]
+
+      reversed toppings:  (12) ["Hot Sauce", "Cheese", "Onions", "Pickles", "Bacon", "Chiles", "Avocado", "Lettuce", "Chili", "Eggs", "Tomatoes", "Mushrooms "]
+    */
     /*
       Callback Methods
     */
 
-    // find the first rating that talks about a burger with find()
-    // find all ratings that are above 2 with filter()
-    // find all ratings that talk about a burger with filter()
-    // Remove the one star rating however you like!
+    // find the first rating that talks about a burger with find() (method returns the value of the first element in the provided array that satisfies the provided testing function).
+    // Syntax: arr.find(callback(element[, index[, array]])[, thisArg])
+    /*
+      WB Explanation / refactor:
+      includes() returns a boolean value so we can use explicit return
 
-    // check if there is at least 5 of one type of meat with some()
-    // make sure we have at least 3 of every meat with every()
-    // sort the toppings alphabetically with sort()
+      function findBurgerRating(singleFeedback) {
+        return singleFeedback.comment.includes('burg');
+      }
+      ARROW SYNTAX
+      const findBurgerRating = function (singleFeedback) => {
+        return singleFeedback.comment.includes('burg');
+      }
+
+      WES FROM THE FUTURE, GROUP ALL THE BURGER FINDING FUNCTIONS INTO AN OBJECT
+
+      const util = {
+        findBurgerRating: function (singleFeedback) => {
+        return singleFeedback.comment.includes('burg');
+      },
+      THIS MAKES OUR FUNCTION A METHOD IN UTIL
+      const findFirstBurgerComment = feedback.find(util.findBurgerRating);
+
+      TO MAKE FUNCTION REUSEABLE TO FIND ANY GIVEN WORD, USING A HIGH ORDER FUNCTION (a function that creates another function.)
+
+      function findByWord(word) {
+        return function (singleFeedback) {
+          return singleFeedback.comment.includes(word);
+        }
+      }
+
+      let findRating = feedback.find(findByWord('burg'));
+      findRating = feedback.find(findByWord('Smoothie'));
+      findRating = feedback.find(findByWord('Service'));
+
+    */
+    // const findBurgerRating = (singleFeedback) => singleFeedback.comment.includes('burg');
+    // Arrow function above uses IMPLICIT return (drops the word "function" and { }).
+
+
+    // const findFirstBurgerComment =  feedback.find(findBurgerRating);
+
+    function findByWord(word) {
+        return function (singleFeedback) {
+          return singleFeedback.comment.toLowerCase().includes(word);
+        }
+      }
+
+      const findRating = feedback.find(findByWord('burg'));
+
+      // console.log("findRating: ", findRating);
+      // console.log("first burger comment: ", findRating.comment);
+      // console.log("first burger comment rating: ", findRating.rating);
+
+    /*
+      findRating:  {comment: "Love the burgs", rating: 4}
+      first burger comment:  Love the burgs
+      first burger comment rating:  4
+    */
+
+    // find all ratings that are above 2 with filter() (method creates a new array with all elements that pass the test implemented by the provided function)
+    /*
+    syntax: let newArray = arr.filter(callback(element[, index, [array]])[, thisArg])
+      var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+      var filtered = array.filter(function(value, index, arr){ return value > 5;});
+    */
+
+    /*
+      MY ORIGINAL SOLUTION WITH REFACTOR BELOW
+      const getReviews = feedback.filter(singleFeedBack => singleFeedBack.rating > 2);
+       console.log("ratings over 2: ", getRatings);
+       getReviews.forEach((feedback) => {
+        console.log("comment: ", feedback.comment, "- rating:", feedback.rating);
+     });
+    */
+
+    function filterByMinRating(minRating) {
+      return function (singleFeedback) {
+        return singleFeedback.rating > minRating;
+      }
+    }
+
+    const getReviews = feedback.filter(filterByMinRating(2));
+    // console.log(getReviews);
+
+    let printReviews = getReviews.forEach((feedback) => {
+      // console.log("comment: ", feedback.comment, "- rating:", feedback.rating);
+    });
+    /*
+      ratings over 2:  (3) [{…}, {…}, {…}]
+      ratings over 2:
+        (3) [{…}, {…}, {…}]
+          0: {comment: "Love the burgs", rating: 4}
+          1: {comment: "Smoothies are great, liked the burger too", rating: 5}
+          2: {comment: "Ambiance needs work", rating: 3}
+          length: 3
+          __proto__: Array(0)
+      comment:  Love the burgs - rating: 4
+      comment:  Smoothies are great, liked the burger too - rating: 5
+      comment:  Ambiance needs work - rating: 3
+    */
+
+    // find all ratings that talk about a burger with filter()
+    // original solution worked well but I refactored
+    // const allBurgerReviews = feedback.filter(e => e.comment.toLowerCase().includes('burg'));
+
+    // reusing findByWord function created on line 377!
+    const allBurgerReviews = feedback.filter(findByWord('burg'));
+    // console.log("All burger reviews:", allBurgerReviews);
+    // console.table(allBurgerReviews);
+
+    printReviews = allBurgerReviews.forEach((feedback) => {
+      // console.log("comment: ", feedback.comment, "- rating:", feedback.rating);
+
+    });
+
+    /*
+      All burger reviews:
+      (3) [{…}, {…}, {…}]
+        0: {comment: "Love the burgs", rating: 4}
+        1: {comment: "Smoothies are great, liked the burger too", rating: 5}
+        2: {comment: "I DONT LIKE BURGERS", rating: 1}
+        length: 3
+        __proto__: Array(0)
+
+      comment:  Love the burgs - rating: 4
+      comment:  Smoothies are great, liked the burger too - rating: 5
+      comment:  I DONT LIKE BURGERS - rating: 1
+    */
+
+    // Remove the one star rating however you like!
+    /*
+      WB one-liner solution
+      const legitRatings = feedback.filter(singleFeedBack => singleFeedBack.rating !== 1);
+      console.table(legitRatings)
+
+    */
+    function filterRatings(value) {
+      return function(feedback, idx) {
+        if (feedback.rating <= value) {
+          return idx;
+        }
+      }
+    }
+
+    let fileredRatings = feedback.findIndex(filterRatings(1));
+    // console.log('Filtered Reviews:', fileredRatings);
+
+
+    const deleteComment = function(idx, feedback) {
+      return [
+        ...feedback.slice(0, idx),
+        ...feedback.slice(idx + 1),
+      ];
+    }
+    // console.log(deleteComment(fileredRatings, feedback));
+    /*
+      Filtered Reviews: 4
+      (4) [{…}, {…}, {…}, {…}]
+        0: {comment: "Love the burgs", rating: 4}
+        1: {comment: "Horrible Service", rating: 2}
+        2: {comment: "Smoothies are great, liked the burger too", rating: 5}
+        3: {comment: "Ambiance needs work", rating: 3}
+        length: 4
+        __proto__: Array(0)
+    */
+
+    // check if there is at least 5 of one type of meat with some() (method tests whether at least one element in the array passes the test implemented by the provided function. It returns a Boolean value.)
+    let meatArrayValues = Object.values(meats);
+    // console.log(meatArrayValues);
+      // returns (3) [10, 5, 7]
+    const atLeastFive = meatArrayValues.some(meat => meat >= 5);
+    // console.log("At least 5 types of meat?", atLeastFive);
+      // returns At least 5 types of meat? true
+
+    // make sure we have at least 3 of every meat with every() (method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value)
+    const addedMeats = _.cloneDeep(meats);
+    addedMeats.chicken = 2
+    newMeatArrayValues =  Object.values(addedMeats);
+    const atLeastThree =  newMeatArrayValues.every(meat => meat >= 3);
+    // console.log("At least 3 of every type?", atLeastThree);
+    // returns: At least 3 of every type? false
+
+    // sort the toppings alphabetically with sort() ( method sorts the elements of an array in place and returns the sorted array, dafault  is ascending)
+    // before sort: ["Hot Sauce", "Cheese", "Onions", "Pickles", "Bacon", "Chiles", "Avocado", "Lettuce", "Chili", "Eggs", "Tomatoes", "Mushrooms"]
+    const sortedToppings = [...toppings].sort();
+    // console.log("sorted topppings", sortedToppings);
+
+    /*
+      # sorted topppings (12) ["Avocado", "Bacon", "Cheese", "Chiles", "Chili", "Eggs", "Hot Sauce", "Lettuce", "Mushrooms", "Onions", "Pickles", "Tomatoes"]
+    */
+
+    const numbers = [1, 2, 100, 3, 200, 400, 155];
+    const numbersSorted = numbers.sort();
+    // console.log(numbersSorted);
+    /* # (7) [1, 100, 155, 2, 200, 3, 400] */
+    const numbersSortedInOrder = numbers.sort((a, b) => a - b);
+    // console.log(numbersSortedInOrder);
+    /* (7) [1, 2, 3, 100, 155, 200, 400] */
+
     // sort the order totals from most expensive to least with .sort()
+    // const sortedOrderTotals = orderTotals.sort((a, b) => a - b); one liner answer
+    function numberSort(a, b) {
+      return a - b;
+    }
+    const sortedOrderTotals = orderTotals.sort(numberSort);
+    console.log("sortedOrderTotals" , sortedOrderTotals);
+    /* sortedOrderTotals (8) [34, 342, 523, 634, 854, 1002, 1644, 2222] */
+
+    /* UNASSIGNED EXTRA CREDIT SORT THE PRICES OBJECT HIGH TO LOW */
+    // When we return 1, the function communicates to sort() that the item1 takes precedence in sorting over the item2. Returning -1 would do the opposite.
+    const sortHighToLowPrices = Object.entries(prices).sort((a, b) => b[1] - a[1]);
+    const newPrices = Object.fromEntries(sortHighToLowPrices);
+    // console.log(sortHighToLowPrices);
+    // console.log(newPrices);
+
+     /*
+      sortHighToLowPrices returns an array
+        (4) [Array(2), Array(2), Array(2), Array(2)]
+          0: (2) ["burger", 765]
+          1: (2) ["sausage", 634]
+          2: (2) ["hotDog", 453]
+          3: (2) ["corn", 234]
+          length: 4
+          __proto__: Array(0)
+
+        newPrices convert array back to object
+          {burger: 765, sausage: 634, hotDog: 453, corn: 234}
+            burger: 765
+            corn: 234
+            hotDog: 453
+            sausage: 634
+            __proto__: Object
+
+        HOW IT WORKS:
+        sort((a, b) => console.log(a, ',', b)) returns each kv pair as an array
+          (2) ["burger", 765] "," (2) ["hotDog", 453]
+          (2) ["sausage", 634] "," (2) ["burger", 765]
+          (2) ["corn", 234] "," (2) ["sausage", 634]
+        FROM HERE, WE CAN USE BRACKET NOTATION TO SORT BY VALUES (where b[1] value is greater than a[1] value, sorting from big to small)
+        PER DOCS:
+        If compareFunction(a, b) returns less than 0, sort a to an index lower than b (i.e. a comes first).
+          sort((a, b) => b[1] - a[1])
+     */
+
+     /*
+      Alpha sort by keys
+      Object.entries(prices).sort();
+        (4) [Array(2), Array(2), Array(2), Array(2)]
+        0: (2) ["burger", 765]
+        1: (2) ["corn", 234]
+        2: (2) ["hotDog", 453]
+        3: (2) ["sausage", 634]
+        length: 4
+        __proto__: Array(0)
+    */
+
     // Sort the prices with sort()
+    const productsSortedByPrices = Object.fromEntries(
+      Object.entries(prices).sort((a, b) => a[1] - b[1])
+    );
+     // console.log(productsSortedByPrices);
 
     /*
       Looping Methods (next)

@@ -26,7 +26,10 @@
       return setInterval(funcToRun, ms);
     }
 
-    setImmediateInterval(buzzer, 2000);
+    const annoyingBuzzer = setImmediateInterval(buzzer, 1000);
+
+    annoyingBuzzer;
+
     function sayHi() {
       console.log('Heyyy');
     }
@@ -42,6 +45,7 @@
       console.log('You clicked! You saved the world');
       // ???? How do i stop
       clearTimeout(bombTimer); // STOP THE TIMER FROM RUNNING
+      clearInterval(annoyingBuzzer);
     });
 
     const poopInterval = setInterval(function () {
@@ -51,6 +55,7 @@
 
     setTimeout(function () {
       clearInterval(poopInterval);
+      console.log("stopped pooping all over you");
     }, 3000);
   </script>
 </body>

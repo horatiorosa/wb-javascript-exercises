@@ -12,6 +12,8 @@
 //   return `Dr. ${firstName}`;
 // };
 
+
+
 /* eslint-disable */
 const inchToCM = inches => inches * 2.54;
 
@@ -55,7 +57,7 @@ const wes = {
     console.log('HEY WESSSSS');
   },
   // Arrow function
-  wisperHi: () => {
+  whisperHi: () => {
     console.log('hii wesss im a mouse');
   }
 }
@@ -69,7 +71,7 @@ function handleClick() {
 }
 
 button.addEventListener('click', function() {
-  console.log('NIce Job!!!');
+console.log('Nice Job!!!');
 });
 
 // Timer Callback

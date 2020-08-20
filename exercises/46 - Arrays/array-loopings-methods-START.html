@@ -129,6 +129,202 @@
       Looping Methods
     */
 
+    function logTopping(topping, index, originalArray) {
+      const previousTopping = originalArray[index - 1];
+      const nextTopping = originalArray[index + 1];
+      // log the topping
+      console.log('current topping:', topping);
+      // log the previous topping if there is one
+      previousTopping ? console.log('previous topping:', previousTopping) : null;
+      // log the next topping is there is one
+      nextTopping ? console.log('next topping:', nextTopping) : null;
+      // if it's the last topping in the array, say goodbye
+      index === originalArray.length -1 ? console.log("Goodbye") : console.log("Getting the next Topping");
+      /*
+        can also use &&
+        index === originalArray.length - 1 && console.log("Goodbye");
+       */
+      console.log('*********************');
+
+    }
+    // toppings.forEach(logTopping);
+
+    // Map, Filter, Reduce
+    function addArms(face) {
+      return `👋${ face }👋`;
+    }
+
+    const toys = faces.map(addArms);
+    // console.log(toys);
+    /* #
+      8) ["👋😃👋", "👋🤠👋", "👋🤡👋", "👋🤑👋", "👋😵👋", "👋🌞👋", "👋🐶👋", "👋😺👋"] 
+    */
+
+    // add last names to the array
+    function bosify(name) {
+      return `${name} Bos`;
+    }
+
+    function capitalize(word) {
+      // return word.charAt(0).toUpperCase() + word.slice(1);
+      return `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
+    }
+
+    // const fullNames = ['wes', 'kate', 'poppy'].map(capitalize).map(bosify);
+    const fullNames = ['wes', 'kate', 'poppy']
+      .map(capitalize)
+      .map(bosify);
+
+    // console.log(fullNames)
+    /* (3) ["Wes Bos", "Kate Bos", "Poppy Bos"] */
+
+    function orderTotalsWithTax(order) {
+      return parseFloat((order * 1.0875)).toFixed(2);
+    }
+
+    const bill = orderTotals.map(orderTotalsWithTax);
+    // console.log(bill);
+
+
+    function attachBody(face, body) {
+      return `
+          ${face}
+         ${body.repeat(3)}
+        ${Array(3).fill(body).join(' ')}
+      👇 ${body.repeat(2)}  👇
+        ${Array(2).fill(body).join('   ')}
+        ${Array(2).fill(body).join('   ')}
+        🦵    🦵
+      `
+    }
+
+    // faces.map(face => attachBody(face, '🍟')).forEach(body => console.log(body));
+
+    const cleanPeople = people.map(function(person) {
+      // console.log(person);
+      // get birthday, figure our how old they are
+      /*
+        my idea was not ideal but it did work
+        const bday = new Date(person.birthday)
+        console.log(bday);
+        console.dir(bday); use to see all methods avail on bday
+        console.log('bday year:', bday.getFullYear());
+
+        const currentYear = new Date().getFullYear();
+        const bdayYear = bday.getFullYear();
+        const age =  currentYear - bdayYear;
+        console.log('age:',age);
+      */
+      // get the timestamp for bday
+      const birthday = new Date(person.birthday).getTime();
+      const now = Date.now(); // already returns timestamp date
+      // how many miliseconds in a year?
+      // 1000 (ms in a second) * 60 sec, * 60 min * 24 hr * 365 days
+      // 1000-60*60*254*365
+      const age = Math.floor((now - birthday)/ 31536000000);
+      // console.log('age:', age);
+
+      // return full name and bday in an object
+      // age: age can be written as age bc key/value names are the same
+      return {
+        age,
+        name: `${person.names.first} ${person.names.last}`,
+        birthday: `${person.birthday}`
+      }
+    });
+
+    // console.table(cleanPeople);
+    /*
+      Array(3)
+        0: {age: 27, name: "Keith Buckley", birthday: "April 22, 1993"}
+        1: {age: 45, name: "Larry Heep", birthday: "January 3, 1975"}
+        2: {age: 76, name: "Linda Bermeer", birthday: "February 12, 1944"}
+        length: 3
+        __proto__: Array(0)
+    */
+
+    // filter() and find()
+
+    function filterByAge(age) {
+      return function(cleanPerson) {
+        return cleanPerson.age >= 40;
+      }
+    }
+    const over40 = cleanPeople.filter(filterByAge(40));
+    /*
+      or
+      const over40 = cleanPeople.filter(person => person.age >= 40);
+    */
+    // console.table(over40);
+
+    if (over40.length) {
+      // console.log(`There are ${over40.length} people over 40.`);
+    }
+
+    function findById(id) {
+      return function(student) {
+        return student.id === id;
+      }
+    }
+
+    function findByProp(prop, propWeAreLookingFor ) {
+      return function(student) {
+        return student[prop] === propWeAreLookingFor;
+      }
+    }
+
+    const studentSearchResult = students.find(findById("565a"));
+    // const studentSearchResult = students.find(student => student.id === "565a");
+    // console.log('Student search result: ',studentSearchResult);
+    const propSearchResult = students.find(findByProp("first_name", "Brett"));
+    // console.log(propSearchResult);
+
+    /*
+      Reduce (method executes a reducer function (that you provide) on each element of the array, resulting in single output value.)
+      Syntax:
+      arr.reduce(callback( accumulator, currentValue[, index[, array]] )[, initialValue])
+    */
+
+    function tallyNumbers(tally, currentTotal) {
+      // console.log(`the current tally is ${tally}`);
+      // console.log(`the current total is ${currentTotal}`);
+      // console.log('------------');
+      // return current tally PLUS the amountof this order
+      return tally + currentTotal;
+    }
+
+    const allOrders = orderTotals.reduce(tallyNumbers, 0);
+    // console.log("Total:", allOrders);
+
+    function inventoryReducer(totals, item) {
+      // console.log(`looping over ${item.type}`);
+      // console.log('------------');
+      // increment the type by 1
+      // totals.shirt = totals.shirt +1 || 1
+      /*
+      alt 1
+      totals.shirt ? totals.shirt +1 : totals.shirt = 1
+      alt 2
+      if (totals.shirt) {
+        totals.shirt = totals.shirt +1;
+        //  or totals.shirt++;
+      } else {
+        totals.shirt = 1
+      }
+      */
+      // return the totals, so the next loop can use it
+      totals[item.type] = totals[item.type] +1 || 1
+      // totals[item.price] = totals[item.price] +1 || 0
+      return totals;
+
+    }
+
+    const inventoryCounts = inventory.reduce(inventoryReducer, {});
+    console.log('inventory counts',inventoryCounts);
+    const totalInventoryPrice = inventory.reduce((acc, item) => acc + item.price, 0);
+    console.log('total inventory price', totalInventoryPrice);
+
+
   </script>
 </body>
 

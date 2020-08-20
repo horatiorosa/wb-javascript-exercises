@@ -21,26 +21,47 @@
     }
 
     // For
-    // for (let i = 100; i <= 120; i += 2) {
-    //   console.log(i);
-    // }
+    for (let i = 100; i <= 120; i += 2) {
+      // console.log(i);
+    }
 
-    // for (let i = 0; i < numbers.length; i++) {
-    //   console.log(numbers[i]);
-    // }
+    for (let i = 0; i < numbers.length; i++) {
+      // console.log(numbers[i]);
+    }
+
+    for (let i = 0; i < numbers.length; i++) {
+      // console.log("index", i, "item", numbers[i]); // this index and the actual array item
+    }
 
     // For of
+    /*
+      used for looping over iterables => something that has a length. Useful bc split and forEach cannot iterate over emojis
+      only gives you raw values, no index and can't filter results either
+      useful wo use with PROMISES
+      for ex: if you need to sequence data (do one thing after another  in a loop) with AWAIT.
+    */
 
     for (const letter of name) {
-      console.log(letter);
+      // console.log(letter);
+    }
+
+    const me = "Horatio Jonathan Rosa";
+
+    for (const x of me) {
+      // console.log(x);
     }
 
     for (const number of numbers) {
-      console.log(number)
+      // console.log(number)
     }
+
     // For in - used for looping over keys of an object
+    for (const number in numbers) {
+      // console.log("key/index:", number, "value:", numbers[number])
+    }
+
     for (const prop in wes) {
-      console.log(prop)
+      // console.log(prop)
     }
 
     const baseHumanStats = {
@@ -50,30 +71,68 @@
       head: 1
     };
 
-    function Human(name) {
+    function Human(name) { // seems to be a Human class
       this.name = name;
     }
 
+    /*
+      Before we set the baseHumanStats as the objects prototypes
+
+      Human {name: "wes"}
+        name: "wes"
+        __proto__:
+          constructor: ƒ Human(name)
+          __proto__: Object
+    */
+
     Human.prototype = baseHumanStats;
 
+    /*
+      After we set the baseHumanStats as the objects prototypes
+
+      Human {name: "wes"}
+        name: "wes"
+          __proto__:
+            arms:
+            2eyes:
+            2feet:
+            2head: 1
+            __proto__: Object
+    */
+
     const wes2 = new Human('wes');
+    /*
+      wes2
+      # Human {name: "wes"}
 
-    console.log(Object.entries(wes2))
+      wes2.feet
+      #2
+    */
 
-    for (const prop in wes2) {
-      console.log(prop);
+    // console.log(Object.entries(wes2))
+
+    for (const prop in wes2) { // grabs prototyp methods & props
+      // console.log(prop);
     }
 
     // While Loop
     let cool = true;
     let i = 1;
     while (cool === true) {
-      console.log('You are cool');
+      console.log('You are my master.');
       i++;
       if (i > 100) {
         cool = false;
       }
     }
+
+    /*
+      Do While Loop
+    do {
+      // run the do first, runs the while condition
+    } while()
+
+    */
 
   </script>
 </body>

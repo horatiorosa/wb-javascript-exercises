@@ -10,18 +10,18 @@
 
 <body>
   <script>
-    // function outer() {
-    //   const outerVar = 'Hey I am the outer Var!';
-    //   function inner() {
-    //     const innerVar = 'Hey I am an inner var!';
-    //     console.log(innerVar);
-    //     console.log(outerVar);
-    //   }
-    //   return inner;
-    // }
+    function outer() {
+      const outerVar = 'Hey I am the outer Var!';
+      function inner() {
+        const innerVar = 'Hey I am an inner var!';
+        console.log(innerVar);
+        console.log(outerVar);
+      }
+      return inner;
+    }
 
-    // const innerFn = outer();
-    // innerFn();
+    const innerFn = outer();
+    innerFn();
 
     function createGreeting(greeting = '') {
       const myGreet = greeting.toUpperCase();
@@ -36,17 +36,20 @@
     console.log(sayHello('kait'));
     console.log(sayHey('kait'));
 
-
     function createGame(gameName) {
       let score = 0;
-      return function win() {
+      function win() {
         score++;
-        return `Your name ${gameName} score is ${score}`;
+        return `Your game ${gameName} score is ${score}`;
       }
+      return win;
     }
 
     const hockeyGame = createGame('Hockey');
     const soccerGame = createGame('Soccer');
+    console.log(soccerGame());
+    console.log(hockeyGame());
+    console.log(hockeyGame());
 
 
   </script>

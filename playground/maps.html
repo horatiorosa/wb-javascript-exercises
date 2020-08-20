@@ -17,7 +17,7 @@
     };
 
     const myMap = new Map();
-    // .set()
+    // .set() needs 2 arguments
     myMap.set('name', 'wes');
     myMap.set(100, 'This is a number');
     myMap.set(person1, 'Really Cool');
@@ -32,6 +32,28 @@
 
     // select that ul
     const ul = document.querySelector('.prizes');
+    /*
+      ways too loop through the map
+      prizes.forEach(entry => {
+        console.log(entry);
+      })
+      # returns:
+        Bear
+        Duck
+        Car
+
+      or the for-of loop
+      for (const prize of prizes) {
+        console.log(prize);
+      }
+      # returns:
+        (2) [100, "Bear"]
+        (2) [200, "Duck"]
+        (2) [300, "Car"]
+
+        destructered for-of loop below
+        created 2 temp variables that we can use in the view
+    */
     for (const [points, prize] of prizes) {
       const li = `<li>${points} - ${prize}</li>`;
       ul.insertAdjacentHTML('beforeend', li);
