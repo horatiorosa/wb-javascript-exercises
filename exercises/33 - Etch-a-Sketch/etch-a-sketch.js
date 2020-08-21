@@ -49,7 +49,7 @@ function startingPlace() {
   ctx.stroke();
 }
 
-function draw({ key } ) {
+function draw({ key }) {
   console.log(key);
   // increment the hue
   // hue += 30;
@@ -124,7 +124,7 @@ function clearCanvas() {
   //   console.log('done the shake');
   // });
   /*
-    anon function causes mulitple event listeners so either add '{ once: true }' as a third argument
+    anon function causes multiple event listeners so either add '{ once: true }' as a third argument
     } { once: true },
     or use a named function as shown below
   */
