@@ -7,21 +7,21 @@ let items = [];
 function handleSubmit(e) {
   e.preventDefault();
   console.log('submitted!!');
-  const name = e.currentTarget.item.value;
-  // if its empty, then dont submit it
-  if (!name) return;
+  const name = e.currentTarget.item.value; // .item refers to the name and/or id attributes of the input
+
+  if (!name) return; // if it's empty, then don't submit it
 
   const item = {
-    name,
+    name, // name: name
     id: Date.now(),
     complete: false,
   };
-  // Push the items into our state
-  items.push(item);
+
+  items.push(item); // Push the items into our state
   console.log(`There are now ${items.length} in your state`);
-  // Clear the form
-  e.target.reset();
-  // fire off a custom event that will tell anyone else who cares that the items have been updated!
+  e.target.reset();  // Clear the form
+  /* fire off a custom event that will tell anyone else who cares that the items have been updated!
+  itemsUpdated is the name of our custom event which we can use to invoke other functions */
   list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
@@ -55,17 +55,17 @@ function restoreFromLocalStorage() {
   console.info('Restoring from LS');
   // pull the items from LS
   const lsItems = JSON.parse(localStorage.getItem('items'));
-  if (lsItems.length) {
+  if (lsItems && lsItems.length) {
     // items = lsItems;
-    // lsItems.forEach(item => items.push(item));
     // items.push(lsItems[0], lsItems[1]);
+    // lsItems.forEach(item => items.push(item)); # shorter way is to use spread notation as show below
     items.push(...lsItems);
     list.dispatchEvent(new CustomEvent('itemsUpdated'));
   }
 }
 
 function deleteItem(id) {
-  console.log('DELETIENG ITEM', id);
+  console.log('DELETING ITEM', id);
   // update our items array without this one
   items = items.filter(item => item.id !== id); // return an items list of all items expect the one matching the id param
   console.log(items);
@@ -75,7 +75,7 @@ function deleteItem(id) {
 function markAsComplete(id) {
   console.log('Marking as complete', id);
   const itemRef = items.find(item => item.id === id);
-  itemRef.complete = !itemRef.complete;
+  itemRef.complete = !itemRef.complete; // toggles the complete true/false value
   list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
@@ -92,4 +92,5 @@ list.addEventListener('click', function(e) {
     markAsComplete(id);
   }
 });
+
 restoreFromLocalStorage();
