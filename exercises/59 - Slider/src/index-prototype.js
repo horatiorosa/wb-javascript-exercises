@@ -12,8 +12,9 @@ function Slider(slider) {
   // select the elements needed for the slider
   this.slides = this.slider.querySelector('.slides');
   // console.log(this.slides);
-  this.prevButton = this.slider.querySelector('.goToPrev');
-  this.nextButton = this.slider.querySelector('.goToNext');
+  prevButton = this.slider.querySelector('.goToPrev');
+  nextButton = this.slider.querySelector('.goToNext');
+  // we dont need 'this.' on the buttons since they are accessible on the constructor
 
   // event listeners to be bound when we open the modal to target the listeners
   this.startSlider = this.startSlider.bind(this);
@@ -24,8 +25,8 @@ function Slider(slider) {
   this.startSlider();
   this.applyClasses();
   // event listeners
-  this.prevButton.addEventListener('click', () =>  this.move('back'));
-  this.nextButton.addEventListener('click', this.move);
+  prevButton.addEventListener('click', () =>  this.move('back'));
+  nextButton.addEventListener('click', this.move);
   // slider.addEventListener('click', function() {
   //   if (document.activeElement === slider.querySelector('.slides')) {
   //     return console.log('focused')
@@ -38,9 +39,6 @@ Slider.prototype.startSlider = function() {
   // console.log(current)
   this.prev = this.current.previousElementSibling || this.slides.lastElementChild;
   this.next = this.current.nextElementSibling || this.slides.firstElementChild;
-  // console.log('prev', prev,'current', current, 'next', next);
-  // console.log({prev, current, next});
-
 }
 
 Slider.prototype.applyClasses = function() {
@@ -87,3 +85,15 @@ const mySlider = new Slider(document.querySelector('.slider'));
 const dogSlider = new Slider(document.querySelector('.dog-slider'));
 
 console.log(mySlider, dogSlider);
+
+window.dogSlider = dogSlider; // can now access in dev tools and call on the prototype methods on it
+
+window.addEventListener('keyup', function(e) {
+  if (e.key === 'ArrowRight') {
+    dogSlider.move();
+  }
+  if (e.key === 'ArrowLeft') {
+    dogSlider.move('back');
+  }
+});
+
