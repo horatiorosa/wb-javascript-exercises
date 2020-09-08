@@ -8,13 +8,14 @@ function Gallery(gallery) {
     throw new Error('No Gallery Found!');
   }
   // select the elements we need
-  const images = Array.from(gallery.querySelectorAll('img'));
+  // gallery.querySelectorAll('img') returns NodeList(9) [img, img, img, img, img, img, img, img, img]
+  const images = Array.from(gallery.querySelectorAll('img')); //(array) (9) [img, img, img, img, img, img, img, img, img]
   // console.log(images);
   const modal = document.querySelector('.modal');
   const modalInner = document.querySelector('.modalInner');
   const prevButton = modal.querySelector('.prev');
   const nextButton = modal.querySelector('.next');
-  const close = modalInner.querySelector('.close');
+  const close = modalInner.querySelector('.close'); // added close icon
   let currentImage;
 
   function openModal() {
@@ -26,8 +27,7 @@ function Gallery(gallery) {
 
     modal.classList.add('open');
     close.style.cssText = "position:absolute; top:0; right:2em; font-size: 1.5em"
-
-    // event listerers to be bound when we open the modal to target the listeners
+    // event listeners to be bound when we open the modal to target the listeners
     window.addEventListener('keyup', handleKeyUp);
     nextButton.addEventListener('click', showNextImage);
     prevButton.addEventListener('click', showPrevImage);
@@ -45,7 +45,7 @@ function Gallery(gallery) {
   }
 
   function handleClick(e) {
-    /* alternate way
+    /* my alternate way
       const innerModal = document.querySelector('.modalInner');
       if (e.closet !== innerModal) {
         closeModal();
@@ -71,7 +71,7 @@ function Gallery(gallery) {
     if (e.key === 'Escape') return closeModal();
     if (e.key === 'ArrowLeft')  return showPrevImage();
     if (e.key === 'ArrowRight') return showNextImage();
-    /* (below, i used switch to handle all the key ups), works if a bit wordy LOL
+    /* (below, i used switch to handle all the key ups), works, if a bit wordy LOL
     switch(e.key) {
       case 'Escape':
       closeModal();

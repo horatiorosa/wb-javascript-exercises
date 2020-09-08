@@ -16,9 +16,36 @@
     console.dir(myDate);
     console.log(myDate.getFullYear());
 
+    // const names = ['wes', 'kait'] this is the Array literal syntax
     const names = new Array('wes', 'kait');
+    /*
+      typeof names
+        "object"
+      names instanceof Array (recall, Attay is special type of Object)
+        true
+    */
+    // const wes = { name: 'wes' } this is the Object literal syntax
     const wes = new Object({ name: 'wes' });
+    /*
+      typeof wes
+        "object"
+      wes instanceof Object
+        true
+    */
     const span = document.createElement('span');
+    console.log(span);
+    /*
+      typeof span
+        "object"
+      span instanceof Node
+        true
+      span instanceof Element (inherits / extends the Node)
+        true
+      span instanceof HTMLSpanElement (inherits / extends the Element)
+        true
+        console.log(span.constructor) (constructor tell you from what function an instance object was made from)
+          ƒ HTMLSpanElement() { [native code] }
+    */
 
     String.prototype.sarcastic = function () {
       // make sarcastic
@@ -32,6 +59,7 @@
       }).join('');
       return sarcastic;
     }
+
     function Pizza(toppings = [], customer) {
       console.log('Making a pizza');
       // save the toppings that were passed in, to this instance of pizza
@@ -49,36 +77,37 @@
       // }
     }
 
-    Pizza.prototype.eat = function () {
-      if (this.slices > 0) {
-        this.slices = this.slices - 1;
-        console.log(`CHOMP you now have ${this.slices} left!`);
-      } else {
-        console.log(`Sorry! No slices left!`);
-      }
-    }
+    // Pizza.prototype.eat = function () {
+    //   if (this.slices > 0) {
+    //     this.slices = this.slices - 1;
+    //     console.log(`CHOMP you now have ${this.slices} left!`);
+    //   } else {
+    //     console.log(`Sorry! No slices left!`);
+    //   }
+    // }
 
-    Pizza.prototype.describe = function () {
-      return `This pizza is for ${this.customer} with the toppings ${this.toppings.join(',')} and there are ${this.slices} left!`;
-    }
+    // Pizza.prototype.describe = function () {
+    //   return `This pizza is for ${this.customer} with the toppings ${this.toppings.join(',')} and there are ${this.slices} left!`;
+    // }
 
     const pepperoniPizza = new Pizza(['pepperoni'], 'Wes Bos');
+    console.log(pepperoniPizza);
     const canadianPizza = new Pizza(['pepperoni', 'mushrooms', 'onion'], 'Kait Bos');
 
 
-    // const button1 = document.querySelector('.one');
-    // const button2 = document.querySelector('.two');
+    const button1 = document.querySelector('.one');
+    const button2 = document.querySelector('.two');
 
-    // function tellMeAboutTheButton() {
-    //   console.log('outside', this);
-    //   setTimeout(() => {
-    //     console.log('inside', this);
-    //     this.textContent = 'You Clicked Me';
-    //   }, 1000);
-    // }
+    function tellMeAboutTheButton() {
+      console.log('outside', this);
+      setTimeout(() => {
+        console.log('inside', this);
+        this.textContent = 'You Clicked Me';
+      }, 1000);
+    }
 
-    // button1.addEventListener('click', tellMeAboutTheButton);
-    // button2.addEventListener('click', tellMeAboutTheButton);
+    button1.addEventListener('click', tellMeAboutTheButton);
+    button2.addEventListener('click', tellMeAboutTheButton);
 
 
 

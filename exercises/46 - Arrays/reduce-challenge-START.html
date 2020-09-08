@@ -533,14 +533,14 @@
     // Count how many times each letter and number occurs
     // use map, filter and reduce
     function filterChars(char) {
-      return char.match(/[a-zA0-9]/i);
+      return char.match(/[a-zA-Z0-9]/i);
     }
 
     const newTextArray = Array.from(text).filter(filterChars);
 
-    const validChars = newTextArray
-      .filter(filterChars)
-      .map(e => e.toLowerCase());
+    const validChars = newTextArray.map(
+      e => e.toLowerCase()
+    );
 
 
     function countChars(totals, char) {
@@ -558,7 +558,7 @@
 
     function isValidCharacter(char) {
       // keep only a-zA-Z0-9
-      return char.match(/[a-zA0-9]/i);
+      return char.match(/[a-zA-Z0-9]/i);
     }
 
     // function lowercase(char) {
