@@ -12,21 +12,23 @@
   <p>Hey</p>
   <button>Click me</button>
   <div class="wrapper">
-    <p>Hey im in a wrapper</p>
+    <p>Hey I'm in a wrapper</p>
   </div>
   <script>
     const person = {
-      name: 'Wes Bos',
+      name: 'Horatio Rosa',
       sayHi() {
         console.log(this);
-        console.log(`hey ${this.name}`);
+        // console.log(`hey ${this.name}`);
         return `hey ${this.name}`;
       }
     };
 
     const jenna = { name: 'Jenna' };
 
-    const sayHi = person.sayHi.bind({ name: 'Harry' });
+    const sayHi1 = person.sayHi.bind(jenna);
+
+    const sayHi2 = person.sayHi.bind({ name: 'Harry' });
 
     // QS Example
     // by calling bind against querySelector, we say when the $ function is run, use `document` as the `this` value.
@@ -35,14 +37,14 @@
 
     const wrapper = document.querySelector('.wrapper');
     const p = wrapper.querySelector('p');
-    console.log(p);
-    console.log($('p'));
-    console.log(lookFor('p'));
+    // console.log(p);
+    // console.log($('p'));
+    // console.log(lookFor('p'));
 
     const bill = {
       total: 1000,
       calculate: function (taxRate) {
-        console.log(this);
+        // console.log(this);
         return this.total + (this.total * taxRate);
       },
       describe(mealType, drinkType, taxRate) {
@@ -51,12 +53,18 @@
     };
 
     const total = bill.calculate(0.13);
-    const calc = bill.calculate.bind({ total: 500 }, 0.06);
+    console.log(total);
 
+    // passing add'l params to bind, first one is the `this` object, the other(s) are for args that are needed for the function or method (preloaded args)
+    // use bind when you need to call a function at a later time
+    const calc = bill.calculate.bind({ total: 500 }, 0.06);
     console.log(calc());
-    const total2 = bill.calculate.call({ total: 500 }, 0.06);
+
+    // call does the same as bind, but it runs the function  immediately for you, can spread into call `...arrayOfArgs`
+    const total2 = bill.calculate.call({ total: 400 }, 0.06);
     console.log(total2);
 
+    // does same as call but only accepts a add'l args as a single array of args
     const total3 = bill.calculate.apply({ total: 325 }, [0.60]);
     console.log(total3);
 
