@@ -96,7 +96,7 @@
     //   });
     // }
 
-    // even more refactoring using implicit return for teh Promise by removing `return`, delete the curly brackets, and use an arrow function for the resolve, implicit return and remove curlies)
+    // even more refactoring using implicit return for the Promise by removing `return`, delete the curly brackets, and use an arrow function for the resolve, implicit return and remove curlies)
     const wait = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
 
     wait(2000).then(function() {
@@ -111,87 +111,130 @@
     const go = document.querySelector('.go');
     const hand = document.querySelector('.bye');
 
-    function animate(e) {
-       const el = e.currentTarget;
-       // 1. change the text to go when clicked
-       el.textContent = 'GO!';
-       // 2. make it a circle after 2 seconds
-      wait(2000).then(() => {
-        console.log('going circle');
-        el.classList.add('circle');
-        return wait(500);
-      })
+
+
+
+  go.addEventListener('clickXXX', function(e) { // XXX is so this function doesn't run
+    // 1. change the text to go when clicked
+    const el = e.currentTarget;
+    el.textContent = 'GO!';
+    // 2. make it a circle after 2 seconds
+    setTimeout(function() {
+      console.log('going circle');
+      el.classList.add('circle');
       // 3. make it red after .05 seconds
-      .then(() => {
+      setTimeout(function() {
         console.log('going red');
         el.classList.add('red');
-        return wait(250);
-      })
-      // 4. make it square after 0.25 seconds
-      .then(() => {
-        console.log('going square');
-        el.classList.remove('circle');
-        return wait(300);
-      })
-      // 5. make it purple after 0.3 seconds
-      .then(() => {
-        el.classList.remove('red');
-        console.log('removing red');
-        el.classList.add('purple');
-        console.log('going purple');
-        return wait(500);
-      })
-      // 6. fade it out after 0.5 seconds
-      .then(() => {
-        console.log('fading out');
-        el.classList.add('fadeOut');
-        return wait(100);
-      })
-      // wave goodbye
-      .then(() => {
-        hand.classList.add('wave');
-        console.log('👋👋👋');
-      })
-      .catch(handleError)
-    }
-
-    go.addEventListener('click', animate);
-
-/* ***************************** before refactoring using Promises ***************************** */
-
-    go.addEventListener('clickXXX', function(e) { // XXX is so this function doesn't run
-      // 1. change the text to go when clicked
-      const el = e.currentTarget;
-      el.textContent = 'GO!';
-      // 2. make it a circle after 2 seconds
-      setTimeout(function() {
-        console.log('going circle');
-        el.classList.add('circle');
-        // 3. make it red after .05 seconds
+        // 4. make it square after 0.25 seconds
         setTimeout(function() {
-          console.log('going red');
-          el.classList.add('red');
-          // 4. make it square after 0.25 seconds
+          console.log('going square');
+          el.classList.remove('circle');
+          // 5. make it purple after 0.3 seconds
           setTimeout(function() {
-            console.log('going square');
-            el.classList.remove('circle');
-            // 5. make it purple after 0.3 seconds
+            el.classList.remove('red');
+            console.log('removing red');
+            el.classList.add('purple');
+            console.log('going purple');
+            // 6. fade it out after 0.5 seconds
             setTimeout(function() {
-              el.classList.remove('red');
-              console.log('removing red');
-              el.classList.add('purple');
-              console.log('going purple');
-              // 6. fade it out after 0.5 seconds
-              setTimeout(function() {
-                console.log('fading out');
-                el.classList.add('fadeOut');
-              }, 500);
-            }, 300);
-          }, 250);
-        }, 500);
-      }, 2000);
-    });
+              console.log('fading out');
+              el.classList.add('fadeOut');
+            }, 500);
+          }, 300);
+        }, 250);
+      }, 500);
+    }, 2000);
+  });
     // 7. finish!
+
+
+  /* *********** refactoring using Promises *********** */
+
+  function animate(e) {
+    const el = e.currentTarget;
+     // 1. change the text to go when clicked
+    el.textContent = 'GO!';
+     // 2. make it a circle after 2 seconds
+    wait(2000)
+    .then(() => {
+      console.log('going circle');
+      el.classList.add('circle');
+      return wait(500);
+    })
+    // 3. make it red after .05 seconds
+    .then(() => {
+      console.log('going red');
+      el.classList.add('red');
+      return wait(250);
+    })
+    // 4. make it square after 0.25 seconds
+    .then(() => {
+      console.log('going square');
+      el.classList.remove('circle');
+      return wait(300);
+    })
+    // 5. make it purple after 0.3 seconds
+    .then(() => {
+      el.classList.remove('red');
+      console.log('removing red');
+      el.classList.add('purple');
+      console.log('going purple');
+      return wait(500);
+    })
+    // 6. fade it out after 0.5 seconds
+    .then(() => {
+      console.log('fading out');
+      el.classList.add('fadeOut');
+      return wait(100);
+    })
+    // wave goodbye
+    .then(() => {
+      hand.classList.add('wave');
+      console.log('👋👋👋');
+    })
+    .catch(handleError)
+  }
+
+  go.addEventListener('clickXXX', animate);
+
+  /* *********** refactoring using Async Await *********** */
+
+  async function animate2(e) {
+     const el = e.currentTarget;
+     // 1. change the text to go when clicked
+     el.textContent = 'GO!';
+     // 2. make it a circle after 2 seconds
+    await wait(2000)
+    console.log('going circle');
+    el.classList.add('circle');
+    await wait(500);
+    // 3. make it red after .05 seconds
+    console.log('going red');
+    el.classList.add('red');
+    await wait(250);
+    // 4. make it square after 0.25 seconds
+    console.log('going square');
+    el.classList.remove('circle');
+    await wait(300);
+    // 5. make it purple after 0.3 seconds
+    el.classList.remove('red');
+    console.log('removing red');
+    el.classList.add('purple');
+    console.log('going purple');
+    await wait(500);
+  // 6. fade it out after 0.5 seconds
+    console.log('fading out');
+    el.classList.add('fadeOut');
+    await wait(100);
+  // wave goodbye
+    hand.classList.add('wave');
+    console.log('👋👋👋');
+    // .catch(handleError) how do we catch errors ???
+  }
+
+  go.addEventListener('click', animate2);
+
   </script>
 </body>
 

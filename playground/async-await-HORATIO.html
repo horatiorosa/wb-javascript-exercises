@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Async Await</title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+<body>
+  <script>
+    function wait(ms = 0) {
+      return new Promise(resolve => {
+        setTimeout(resolve, ms); // pass resolve function directly along with ms
+      })
+    }
+
+    async function go() {
+      console.log('Starting');
+      // use await in front of a promise based functions and it will pause the function from running until the promise is resolved
+      // await can only be used in async functions
+      await wait(2000);
+      console.log('Running');
+      await wait(200);
+      console.log('Ending');
+    }
+
+    // go();
+
+
+    // What type of functions can we mark as async?
+
+    // Function declaration
+    // async function functionDeclaration() { /* code here */ }
+
+    // // Arrow functions
+    // const arrowFunction = async () => { /* code here */ };
+
+    // // Callback functions
+    // window.addEventlistener('click', async function() { /* code here */ });
+
+    // // Methods
+    // const person = {
+    // // method
+    // sayHi: async function() { /* code here */ },
+    // // method shorthand
+    // async sayHi() { /* code here */ },
+    // // function property
+    // sayHey: async () => { /* code here */ },
+    // }
+
+    function makePizza(toppings = []) {
+      return new Promise(function (resolve, reject) {
+        if(toppings.includes('pineapple')) {
+          reject(`Seriously? Get out 🍍🍍 !!!`);
+        }
+        const amountOfTimeToBake = 500 + (toppings.length * 200);
+        setTimeout(function() {
+          resolve(`Here is your 🍕🍕 with the toppings; ${toppings.join(', ')}`);
+        }, amountOfTimeToBake);
+      });
+    }
+
+    async function makeDinner() {
+      // await = asynchonously wait for the data
+      // const pizza1 = await makePizza(['pepperoni']);
+      // const pizza2 = await makePizza(['pepperoni, sausage ']);
+      // console.log(pizza1);
+      // console.log(pizza2);
+      // 2 awaits above is not performant, lets refactor!
+
+      const pizzaPromise1 = await makePizza(['pepperoni']);
+      const pizzaPromise2 = await makePizza(['pepperoni, sausage ']);
+      const [pep, meats] = await Promise.all([pizzaPromise1, pizzaPromise2]);
+
+      console.log(pep, meats);
+
+    }
+
+    makeDinner();
+
+  </script>
+</body>
+
+</html>
