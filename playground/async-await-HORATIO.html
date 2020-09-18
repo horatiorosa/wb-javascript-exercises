@@ -20,6 +20,7 @@
       console.log('Starting');
       // use await in front of a promise based functions and it will pause the function from running until the promise is resolved
       // await can only be used in async functions
+      // a function is marked as `async`, immediately returns a promise
       await wait(2000);
       console.log('Running');
       await wait(200);

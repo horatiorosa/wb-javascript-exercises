@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Async Await</title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+<body>
+  <script>
+    function wait(ms = 0) {
+      return new Promise(resolve => {
+        setTimeout(resolve, ms); // pass resolve function directly along with ms
+      })
+    }
+
+    function makePizza(toppings = []) {
+      return new Promise(function (resolve, reject) {
+        if(toppings.includes('pineapple')) {
+          reject(`Seriously? Get out 🍍🍍 !!!`);
+        }
+        const amountOfTimeToBake = 500 + (toppings.length * 200);
+        setTimeout(function() {
+          resolve(`Here is your 🍕🍕 with the toppings; ${toppings.join(', ')}`);
+        }, amountOfTimeToBake);
+      });
+    }
+
+    // *** error handling method 1
+    // async function go() {
+    //   try {
+    //     const pizza = await makePizza(['pineapple']);
+    //     console.log(pizza);
+    //   } catch (err) {
+    //     // display error to use via UI
+    //     // send to error tracking service
+    //     console.log(`Ohhh 💩💩💩 !!!`);
+    //     console.log(err);
+    //   }
+    // }
+
+    // *** error handling method 2 (handles error at time you define the function, handle inside the functio )
+    // function handleError(err) {
+    //   // display error to use via UI
+    //   // send to error tracking service
+    //     console.log(`Ohhh 💩💩💩 !!!`);
+    //     console.log(err);
+    // }
+
+    // async function go() {
+    //   const pizza = await makePizza(['pineapple']).catch(handleError);
+    //   console.log(pizza);
+    // }
+    // go();
+
+
+    // *** error handling method 3 (handles error when the function is called) also can catch unrelated errors
+    // function handleError(err) {
+    //   // display error to use via UI
+    //   // send to error tracking service
+    //     console.log(`Ohhh 💩💩💩 !!!`);
+    //     console.log(err);
+    // }
+
+    // async function go() {
+    //   // window.doesNotExist();
+    //   const pizza = await makePizza(['pineapple']);
+    //   console.log(pizza);
+    //   return pizza;
+    // }
+
+    // go().catch(handleError);
+
+    /* Or (often you have a function that does a few things with promises inside of it and you want to wait for the entire function to finish returning it's data)
+      go().then(result => {
+        console.log(result);
+      }).catch(handleError);
+    */
+    /*
+      Ohhh 💩💩💩 !!!
+      async-await-error-handling-HORATIO.html:63 TypeError: window.doesNotExist is not a function
+          at go (async-await-error-handling-HORATIO.html:67)
+          at async-await-error-handling-HORATIO.html:73
+    */
+
+    // *** error handling method 4 (nesting promises)
+    // function handleError(err) {
+    //   // display error to use via UI
+    //   // send to error tracking service
+    //   console.log(`Ohhh 💩💩💩 !!!`);
+    //   console.log(err);
+    // }
+
+    //  async function go() {
+    //   const pizza = await makePizza(['pineapple']);
+    //   console.log(pizza);
+    //   return pizza;
+    // }
+
+    // async function goGo() {
+    //   const result = await go();
+    // }
+
+    // goGo().catch(handleError);
+
+
+    // *** error handling method 5: Make a safe function with a High Order Function (HOF = a func that returns another func)
+    // safeFunction is reusable at any time, less duplication for catching errors (very useful in Node & Express)
+    // function handleError(err) {
+    //   // display error to use via UI
+    //   // send to error tracking service
+    //   console.log(`Ohhh 💩💩💩 !!!`);
+    //   console.log(err);
+    // }
+
+    // async function go() {
+    //   const pizza = await makePizza(['pineapple']);
+    //   console.log(pizza);
+    //   return pizza;
+    // }
+
+    // // go(); // unsafe
+
+    // function makeSafe(fn, errorHandler) {
+    //   return function() {
+    //     fn().catch(errorHandler)
+    //   }
+    // }
+
+    // const safeGo =  makeSafe(go, handleError);
+
+    // safeGo();
+
+    // *** error handling method preferred by WB
+    function handleError(err) {
+      // display error to use via UI
+      // send to error tracking service
+      console.log(`Ohhh 💩💩💩 !!!`);
+      console.log(err);
+    }
+
+    async function go() {
+      const pizza = await makePizza(['pineapple']);
+      console.log(pizza);
+      return pizza;
+    }
+
+    // catch error at run time
+    go().catch(handleError);
+
+
+
+
+  </script>
+</body>
+
+</html>

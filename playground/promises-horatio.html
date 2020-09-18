@@ -13,7 +13,7 @@
     function makePizza(toppings = []) {
       // setting the promise to a variable is often not done
       // const pizzaPromise = new Promise(function (resolve, reject) {
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         // reject if people try with pineapple
         if(toppings.includes('pineapple')) {
           reject(`Seriously? Get out 🍍🍍 !!!`);
