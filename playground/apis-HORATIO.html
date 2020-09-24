@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>APIs</title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+<body>
+  <p class="user"></p>
+
+  <script>
+    /*
+      const endpoint = `https://api.github.com/users/horatiorosa`;
+      MODIFIED FOR ASYNC / AWAIT REFACTOR
+    */
+
+    const baseEndpoint = `https://api.github.com`;
+    const userEndpoint = `${baseEndpoint}/users`;
+    const userEl  = document.querySelector('.user');
+
+    function handleError(err) {
+      console.log('error: ', err);
+      // console.log('oops');
+      // console.log("reree", response);
+      userEl.textContent = `Something went wrong: ${err} `;
+    }
+
+    function pause( ms = 0 ) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+
+    /*
+      horatioPromise
+      .then(response => { // this 1st promise, gets the response
+        return response.json(); // this parses the response for us
+        pause(10000);
+      })
+      .then(data => { // this 2nd promise gets the data
+        console.log(data);
+        userEl.textContent = `${ data.name } - ${data.blog}`;
+      })
+      .catch(handleError)
+
+      REFACTOR TO ASYNC / AWAIT
+    */
+
+    async function displayUser(username) {
+      userEl.textContent = 'loading ...';
+      // end point: is the URL you need to visit to get the data
+      // const response = await fetch(`${userEndpoint}/` + username); WB Solution below:
+      const response = await fetch(`${userEndpoint}/${username}`);
+      console.log("resp", response.ok)
+      await pause(500);
+      const data = await response.json();
+      console.log('resp: ',response, 'data:', data);
+      userEl.textContent = !response.ok ? `Something went went wrong: ${data.message}` : `${ data.name } - ${data.blog}`;
+    }
+
+    // displayUser('wesbos').catch(handleError);
+    // displayUser('stolinski').catch(handleError);
+    displayUser('horatiorosa').catch(handleError);
+
+
+
+  </script>
+</body>
+
+</html>

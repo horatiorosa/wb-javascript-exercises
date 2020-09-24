@@ -13,7 +13,7 @@ function pause(ms = 0) {
 */
 
 function getRandomBetween(min = 20, max = 150, randomNumber = Math.random()) {
-  // (150 - 20) = 130, random no. would is bet. 0 and 130, for nos. bet. 20 and 150, we add the min. (150 -20) + 20 => (130) + 20 = 150, random nos. would be bet. 20 and 150. passing randomNumber in the args allows for a more pure function. If you pass in the same "random" no., you always get the same result
+  // (150 - 20) = 130, random no. would is bet. 0 and 130, for nos. bet. 20 and 150, we add the min. (150 -20) => (130) + 20 = 150, random nos. would be bet. 20 and 150. passing randomNumber in the args allows for a more pure function. If you pass in the same "random" no., you always get the same result
   return Math.floor(randomNumber * (max - min) + min);
 }
 
