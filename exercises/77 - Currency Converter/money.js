@@ -80,7 +80,7 @@ async function handleInput(e) {
   toAmount.textContent = formatCurrency(rawAmount, toCurrency.value);
 }
 
-async function fetchRates(base = 'USD', symbols = []) {
+async function fetchRates(base = 'USD', symbols = []) { // i didnt make use of symbols yet
   const response = await fetch(`${endpoint}?base=${base}&symbols=${symbols}`);
   const rates = await response.json();
   // console.log(rates)
@@ -98,7 +98,8 @@ async function convert(amount, from, to) {
   }
   // convert the amout that they pass in
   const rate = ratesByBase[from].rates[to];
-  const convertedAmount = Number((amount * rate).toFixed(2));
+  // const convertedAmount = Number((amount * rate).toFixed(2));
+  const convertedAmount = (amount * rate).toFixed(2);
   console.log(`${amount} ${from} is ${convertedAmount} in ${to}`);
   return convertedAmount;
 }
