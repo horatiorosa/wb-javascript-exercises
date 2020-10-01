@@ -1,3 +1,12 @@
+const form = document.querySelector('.current_conversion_form');
+const fromInput = form.querySelector('[name=from_amount]');
+const fromCurrency = form.querySelector('[name="from_currency"]');
+const toCurrency = form.querySelector('[name="to_currency"]');
+const toAmount = form.querySelector('.to_amount');
+const endpoint = `https://api.exchangeratesapi.io/latest`;
+const ratesByBase = {};
+
+
 const currencies = {
   USD: 'United States Dollar',
   AUD: 'Australian Dollar',
@@ -32,3 +41,78 @@ const currencies = {
   ZAR: 'South African Rand',
   EUR: 'Euro',
 };
+
+function generateOptions(options) {
+  return Object.entries(options)
+    .map(
+      ([currencyCode, currencyName]) =>
+    // console.log('currencyCode',currencyCode, 'currencyName',currencyName);
+    `<option value="${currencyCode}">${currencyCode} ${currencyCode ? '-' : ''} ${currencyName}</option>`
+    )
+    .join('');
+}
+
+function formatCurrency(amount, currency) {
+  // can pass the Intl.NumberFormat API the language of the reader, so you can pass it 'en-US'  or teh local where you will be reading it in
+  return Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+
+  }).format(amount);
+}
+
+// function formatFromInput() {
+//   fromInput.innerHTML = formatCurrency(fromInput.value, fromCurrency.value);
+//   console.log('from',fromInput.innerHTML)
+// }
+
+async function handleInput(e) {
+  // console.log('target', e.target.value); // where the event actually occurs
+  // console.log('current target', e.currentTarget); // listener is on the form itself
+  const rawAmount = await convert(
+    fromInput.value,
+    fromCurrency.value,
+    toCurrency.value
+  );
+
+  // console.log('rawAmount',rawAmount);
+  // toAmount.innerHTML = `${rawAmount} ${toCurrency.value}`;
+  toAmount.textContent = formatCurrency(rawAmount, toCurrency.value);
+}
+
+async function fetchRates(base = 'USD', symbols = []) {
+  const response = await fetch(`${endpoint}?base=${base}&symbols=${symbols}`);
+  const rates = await response.json();
+  // console.log(rates)
+  return rates;
+}
+
+async function convert(amount, from, to) {
+  // first check it we have the rates to convert from that currency
+  if(!ratesByBase[from]) {
+    console.log(`we dont have ${from} to convert to ${to} so let go get it.  `);
+  const rates = await fetchRates(from);
+  console.log(rates);
+  // store rates for next time
+  ratesByBase[from] = rates;
+  }
+  // convert the amout that they pass in
+  const rate = ratesByBase[from].rates[to];
+  const convertedAmount = Number((amount * rate).toFixed(2));
+  console.log(`${amount} ${from} is ${convertedAmount} in ${to}`);
+  return convertedAmount;
+}
+
+const optionsHTML = generateOptions(currencies);
+fromCurrency.innerHTML = optionsHTML;
+toCurrency.innerHTML = optionsHTML;
+
+
+// console.log('optionsHTML: ',optionsHTML);
+// populate the options elements on page load
+/*
+  A alternative to multiple eventListeners would be to listen to change events on the entire form!
+  fromCurrency.addEventListener('change', handleClick);
+  toCurrency.addEventListener('change', handleClick);
+*/
+form.addEventListener('input', handleInput);
