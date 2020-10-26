@@ -1,5 +1,4 @@
-// cant export default a variable, only expressions, functions or classes are allowed as the '`default` export.
- const currencies = {
+const currencies = {
   USD: 'United States Dollar',
   AUD: 'Australian Dollar',
   BGN: 'Bulgarian Lev',
@@ -34,6 +33,6 @@
   EUR: 'Euro',
 };
 
+export const localCurrency = 'CAD';
 
-export const localCurrency = 'USD';
 export default currencies;

@@ -32,5 +32,8 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "utils.js": "^1.0.1"
   }
 }

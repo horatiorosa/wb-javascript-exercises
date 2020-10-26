@@ -8,6 +8,7 @@ const ratesByBase = {};
 
 
 const currencies = {
+  '': 'Select Currency',
   USD: 'United States Dollar',
   AUD: 'Australian Dollar',
   BGN: 'Bulgarian Lev',
@@ -53,12 +54,14 @@ function generateOptions(options) {
 }
 
 function formatCurrency(amount, currency) {
-  // can pass the Intl.NumberFormat API the language of the reader, so you can pass it 'en-US'  or teh local where you will be reading it in
-  return Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
+  // can pass the Intl.NumberFormat API the language of the reader, so you can pass it 'en-US'  or th local where you will be reading it in
+  if (currency) {
+    return Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
 
-  }).format(amount);
+    }).format(amount);
+  }
 }
 
 // function formatFromInput() {
@@ -92,7 +95,7 @@ async function convert(amount, from, to) {
   if(!ratesByBase[from]) {
     console.log(`we dont have ${from} to convert to ${to} so let go get it.  `);
   const rates = await fetchRates(from);
-  console.log(rates);
+  console.log('rates',rates);
   // store rates for next time
   ratesByBase[from] = rates;
   }
@@ -101,13 +104,13 @@ async function convert(amount, from, to) {
   // const convertedAmount = Number((amount * rate).toFixed(2));
   const convertedAmount = (amount * rate).toFixed(2);
   console.log(`${amount} ${from} is ${convertedAmount} in ${to}`);
+
   return convertedAmount;
 }
 
 const optionsHTML = generateOptions(currencies);
 fromCurrency.innerHTML = optionsHTML;
 toCurrency.innerHTML = optionsHTML;
-
 
 // console.log('optionsHTML: ',optionsHTML);
 // populate the options elements on page load

@@ -1,10 +1,14 @@
-const last = 'bos';
-const middle = 'slam dunk';
+// this variable is scoped only to this currenty module. you can use in function calls here and no where else within the app
+const last = 'rosa';
+const middle = 'your master'
+
 
 export function returnHi(name) {
-  return `hi ${name} ${last}`;
+  return `hello ${name} ${last}`
 }
-const first = 'wes';
-// NAMED exports - we can have as many as we want
-export { last, middle };
+
+const first = 'master'
+
 export default first;
+// NAMED exports
+export { last, middle }
