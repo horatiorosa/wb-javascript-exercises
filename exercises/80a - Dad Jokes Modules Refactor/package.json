@@ -1,0 +1,22 @@
+{
+  "name": "dadjokes",
+  "version": "1.0.0",
+  "description": "dad jokes on demand",
+  "main": "jokes.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}

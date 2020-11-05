@@ -1,72 +1,125 @@
-import wait from 'waait';
-import { name } from 'faker';
-import { formatDistance, format } from 'date-fns';
+import pause from 'waait'; // default export, can name anything
+import faker from 'faker';
+import { format, formatDistance } from 'date-fns';
 import axios from 'axios';
-import { intersection, isEqual } from 'lodash';
+import { intersection, cloneDeep, isEqual } from 'lodash';
 import to from 'await-to-js';
 
-const fakeNames = Array.from(
-  { length: 10 },
-  () => `${name.firstName()} ${name.lastName()}`
-);
+// waait
 
 async function go() {
   console.log('Going!');
-  await wait(200);
-  console.log('ending!');
+  await pause(1000);
+  console.log('Did you notice the pause?');
 }
 
-const diff = formatDistance(new Date(), new Date(2020, 3, 4, 10, 32, 0), {
-  addSuffix: true,
-}); //= > 'in about 1 hour'
+go();
+
+
+// faker
+
+/*
+  you can import specific functions from faker
+  eg `import { name } from 'faker'`
+  name.firstName();
+*/
+// console.log(faker);
+// console.log();
+// console.log(`"${faker.hacker.phrase()}" shouted ${faker.name.firstName()}, ${faker.company.companyName()}'s ${faker.name.jobTitle()}.`);
+
+// how can we get an array of 10 fake names?
+
+// const fakeNames = Array.from({ length: 10 }, faker.name.firstName);
+const fakeNames = Array.from({ length: 10 }, () =>
+  `${faker.name.firstName()} ${faker.name.lastName()}`);
+
+// console.log(fakeNames);
+
+
+
+// date-fns
+
+const diff =  formatDistance(
+  // new Date(1986, 3, 4, 15, 32, 0),
+  new Date(),
+  new Date(2019, 3, 4, 10, 32, 0),
+  { addSuffix: true }
+)
+
 console.log(diff);
 
+// use `format`` to get a date like this: November the 4th 2020
 const date = new Date();
+const formattedDate = format(
+  date,
+  `'Today is' LLLL 'the' do yyyy'` // or simply 'y' for the year
+);
+console.log(formattedDate);
 
-// January the 12th 2020
-const formatted = format(date, `LLLL 'the' do y`);
-console.log(formatted);
+// axios
 
 async function getJoke() {
-  const { data } = await axios.get('https://icanhazdadjoke.com', {
+  // const res = await axios.get('https://icanhazdadjoke.com/',
+  const { data } = await axios.get('https://icanhazdadjoke.com/', //get data via destructing
+  {
     headers: {
-      Accept: 'application/json',
-    },
+      Accept: 'application/json'
+    }
   });
-  console.log(data);
+  console.log(data.joke); // got this by digging into the res object
 }
 
-// getJoke();
+getJoke();
 
-const a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const b = [5, 3, 8, 3, 7, 453, 34];
 
-const sameValues = intersection(a, b);
-console.log(sameValues);
+// lodash
 
-const person1 = { name: 'wes' };
-const person2 = { name: 'wes' };
+const a = [1,2,3,4,5,6,7,8,9,10];
+const b = [5,3,8,7,20,65,200];
 
-console.log(isEqual(person1, person2));
+const sameValues = intersection(a,b);
+console.log('same values',sameValues);
 
-function checkIfNameIsCool(firstName) {
+const person1 = {name: 'horatio'};
+const person2 = {name: 'horatio'};
+
+console.log('without dash eq ', person1 === person2);
+// #false
+// bc these are 2 different objects
+console.log('with lodash eq ', isEqual(person1, person2));
+// #true
+//isEqual is a deep compation of the VALUES to determine if equivalent
+
+
+// await-to-js
+
+function checkIfNameIsCool(yourName) {
   return new Promise(function(resolve, reject) {
-    if (firstName === 'Wes') {
-      resolve('Cool name');
-      return;
+    if (yourName === 'horatio') {
+      return resolve('Cool Name');
     }
-    reject(new Error('Bad Name'));
+    reject(new Error('Not so cool dude'));
   });
 }
 
 async function checkName() {
-  const [err, successValue] = await to(checkIfNameIsCool('snickers'));
-  if (err) {
+  // const nameDescription = await checkIfNameIsCool('Horatio');
+  // console.log(nameDescription);
+  /*
+    const response = await to(checkIfNameIsCool('horatio'));
+    // the response is an arrray, the first item will be the error and the second is the resolve value
+    console.log(response);
+  */
+  // lets use dedtructuring for more useful error handling
+  const [error, success] = await to(checkIfNameIsCool('horatio'));
+  if (error) {
     // deal with it
-    console.log(err);
+    console.log("oh, 💩, something went wrong");
+    console.log(error)
   } else {
-    console.log(successValue);
+    console.log('success', `$ {success}`);
   }
 }
+
 
 checkName();

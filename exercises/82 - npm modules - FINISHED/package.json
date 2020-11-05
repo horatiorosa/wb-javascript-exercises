@@ -1,25 +1,27 @@
 {
   "name": "npmmodules",
   "version": "1.0.0",
-  "description": "",
+  "description": "working with npm modules",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html "
   },
-  "author": "",
+  "author": "hr",
   "license": "ISC",
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
     "await-to-js": "^2.1.1",
-    "axios": "^0.19.0",
-    "date-fns": "^2.8.0",
-    "faker": "^4.1.0",
-    "lodash": "^4.17.15",
+    "axios": "^0.21.0",
+    "date-fns": "^2.16.1",
+    "faker": "^5.1.0",
+    "lodash": "^4.17.20",
     "waait": "^1.0.5"
-  },
-  "browserslist": [
-    "last 1 chrome versions"
-  ]
+  }
 }

@@ -1,4 +1,4 @@
-// Topics: Design Pattern
+ // Topics: Design Pattern
 // Challenge: add close button
 
 // create a Gallery function
