@@ -1,37 +1,41 @@
-import { handleResult } from './handlers';
-import { colorsByLength, isDark } from './colors';
+import { handleResult } from './handlers.js';
+import { colorsByLength, isDark } from '/colors.js'
 
-const colorsEl = document.querySelector('.colors');
+const colorsElement = document.querySelector('.colors');
 
 function displayColors(colors) {
-  return colors
-    .map(
-      color =>
-        `<span class="color ${color} ${
-          isDark(color) ? 'dark' : ''
-        }" style="background: ${color};">${color}</span>`
-    )
-    .join('');
+  // colors.map(color => console.log(color));  short cut syntax `isDark(color) && 'dark'` but applies a class calls false, better to use an empty string
+  return colors.map(color =>
+    `<span class="color ${color} ${isDark(color) ? 'dark' : ''}" style="background: ${color}"> ${color} </span>`)
+  .join('');
 }
 
 window.SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
 
 function start() {
   // see if their browser supports this
   if (!('SpeechRecognition' in window)) {
-    console.log('Sorry your browser does not support speech reco. ');
-    return;
+    console.log('Sorry, your browser does not support speech recognition');
+    return
   }
+
   // it does work
-  console.log('Starting...');
-  // make a new speech reco
-  const recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.onresult = handleResult;
-  recognition.start();
+   console.log('Starting Speech Recognition');
+   //make a new speech recognition
+   const recognition = new SpeechRecognition();
+   recognition.continuous = true;
+   recognition.interimResults = true;
+   recognition.onresult = handleResult;
+   recognition.start();
+
+   console.log(recognition);
 }
 
 start();
-colorsEl.innerHTML = displayColors(colorsByLength);
+colorsElement.innerHTML = displayColors(colorsByLength);
+
+/*
+  Keep high score in local storage
+  split each work and loop over the words and test to see if a valid colo

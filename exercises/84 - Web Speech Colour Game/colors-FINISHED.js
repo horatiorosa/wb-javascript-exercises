@@ -157,13 +157,10 @@ export function isDark(colorName) {
   return r * 0.299 + g * 0.587 + b * 0.114 < 120;
 }
 
-export const colorsByLength = Object.keys(colors).sort((a, b) => {
-  return a.length - b.length;
-});
-
-// console.log(colorsByLength);
+export const colorsByLength = Object.keys(colors).sort(
+  (a, b) => a.length - b.length
+);
 
 export function isValidColor(word) {
-  return !!colors[word]; // WB solution: coerce the return into a boolean
-  // return Object.keys(colors).includes(word) this was my idea to do the above
+  return !!colors[word];
 }

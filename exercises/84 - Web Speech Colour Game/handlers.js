@@ -1,24 +1,33 @@
-import { isValidColor } from './colors';
+import { isValidColor } from './colors.js';
 
 function logWords(results) {
-  // console.log(results[results.length - 1][0].transcript);
+  // console.log(results[results.length -1][0].transcript);
 }
 
 export function handleResult({ results }) {
+  // console.log(event); // event is the SpeechRecognitionEvent
   logWords(results);
-  const words = results[results.length - 1][0].transcript;
-  // lowercase everything
+  let words = results[results.length -1][0].transcript;
+  // console.log('handleResult words:',words);
+  // lower case everything (speeech input)
   let color = words.toLowerCase();
-  // strip any spaces out
+  // strip white space
   color = color.replace(/\s/g, '');
-  // check if it is a valid colour
-  if (!isValidColor(color)) return; // thats all folks
-  // if it is, then show the UI for that
-  const colorSpan = document.querySelector(`.${color}`);
-  colorSpan.classList.add('got');
-  console.log(colorSpan);
-  console.log('This is a valid color!');
+  // console.log('color: ',color);
+  // check is word is a valid color
+  if (!isValidColor(color)) return;
+  // if it is, show the UR for that
+  const colorSpan = document.querySelector(`span.color.${color}`);
+  // console.log(colorSpan);
+  colorSpan.classList.add('got')
+  console.log('This is a valid color');
   console.log(color);
   // change the background color
   document.body.style.backgroundColor = color;
 }
+
+
+
+
+// SpeechRecognitionResult
+// SpeechRecognitionResultList
