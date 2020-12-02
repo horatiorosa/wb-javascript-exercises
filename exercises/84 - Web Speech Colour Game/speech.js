@@ -38,4 +38,5 @@ colorsElement.innerHTML = displayColors(colorsByLength);
 
 /*
   Keep high score in local storage
-  split each work and loop over the words and test to see if a valid colo
+  split each work and loop over the words and test to see if a valid color
+*/
