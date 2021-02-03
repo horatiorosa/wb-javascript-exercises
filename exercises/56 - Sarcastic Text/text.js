@@ -45,8 +45,11 @@ function transformText(text) {
     my alternate method, type value set by click event event listener
     const mod = Array.from(text).map(filters[type]);
   */
+  console.log('filter', filter);
   const mod = Array.from(text).map(filters[filter]); // bc filter is a variable and not a property, we need square brackets to look up the property
-  // console.log(mod)
+  console.log('mod', mod);
+  console.log('mod join', mod.join(''));
+
   result.textContent = mod.join('');
 }
 

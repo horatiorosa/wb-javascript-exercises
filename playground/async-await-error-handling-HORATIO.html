@@ -40,8 +40,10 @@
     //     console.log(err);
     //   }
     // }
+    // down side: ruins the "beauty" part of async await and not ha ving to use many brackets
+    // plus side: you have wrap multiple promises and it will call any errors in all the promises
 
-    // *** error handling method 2 (handles error at time you define the function, handle inside the functio )
+    // *** error handling method 2 "mix and match" (using await to get the data but using older Promise syntax  catch() to handle errors). Handles error at time of definition. Useful if you must do something with the error inside of the function (display a modal for example)
     // function handleError(err) {
     //   // display error to use via UI
     //   // send to error tracking service
@@ -54,9 +56,9 @@
     //   console.log(pizza);
     // }
     // go();
+    // plus side: This handles error at time you define the function and inside the function.
 
-
-    // *** error handling method 3 (handles error when the function is called) also can catch unrelated errors
+    // *** error handling method 3 (handles error when the function is called)
     // function handleError(err) {
     //   // display error to use via UI
     //   // send to error tracking service
@@ -65,14 +67,16 @@
     // }
 
     // async function go() {
-    //   // window.doesNotExist();
+    //   // window.doesNotExist(); // fake function to test error handling
     //   const pizza = await makePizza(['pineapple']);
     //   console.log(pizza);
     //   return pizza;
     // }
+    // plus side: also can catch unrelated errors `window.doesNotExist()`.
 
     // go().catch(handleError);
 
+    // note: when you put async in front of a function, it immediately returns a Promise
     /* Or (often you have a function that does a few things with promises inside of it and you want to wait for the entire function to finish returning it's data)
       go().then(result => {
         console.log(result);
@@ -106,12 +110,12 @@
     // goGo().catch(handleError);
 
 
-    // *** error handling method 5: Make a safe function with a High Order Function (HOF = a func that returns another func)
+    // *** error handling method 5: Make a safe function with a High Order Function (HOF = a func that returns another func)..
     // safeFunction is reusable at any time, less duplication for catching errors (very useful in Node & Express)
     // function handleError(err) {
     //   // display error to use via UI
     //   // send to error tracking service
-    //   console.log(`Ohhh 💩💩💩 !!!`);
+    //   console.log( );
     //   console.log(err);
     // }
 
@@ -132,6 +136,7 @@
     // const safeGo =  makeSafe(go, handleError);
 
     // safeGo();
+    // plus side: resusable and cleaner code, less duplication for error handling
 
     // *** error handling method preferred by WB
     function handleError(err) {

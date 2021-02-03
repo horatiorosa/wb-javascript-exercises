@@ -1,5 +1,5 @@
-import { pause } from './utils.js';
-import { loader, jokeButtonSpan, endPoint } from './elements.js';
+import { pause } from './utils';
+import { loader, jokeButtonSpan, endPoint } from './elements';
 
 // Named Export (we can have lots of these)
 export async function fetchJoke() {
@@ -21,5 +21,3 @@ export async function fetchJoke() {
   jokeButtonSpan.classList.remove('hidden');
   return data;
 }
-
-
